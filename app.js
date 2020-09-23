@@ -1,5 +1,6 @@
-const { writeFile, copyFile } = require('./utils/generate-site.js');
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
+const generatePage = require('./src/page-template');
+const { writeFile, copyFile } = require('./utils/generate-site');
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -127,9 +128,11 @@ const promptProject = portfolioData => {
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
+    console.log('generate', portfolioData)
     return generatePage(portfolioData);
   })
   .then(pageHTML => {
+    console.log('writeFile', pageHTML)
     return writeFile(pageHTML);
   })
   .then(writeFileResponse => {
@@ -144,7 +147,7 @@ promptUser()
   })
   
 
-const generatePage = require('./src/page-template.js');
+
 
 // const profileDataArgs = process.argv.slice(2);
 // const [name, github] = profileDataArgs;
